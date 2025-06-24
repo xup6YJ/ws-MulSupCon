@@ -1,3 +1,3 @@
-# 【MICCAI'2025】Weighted Stratification in Multi-Label Contrastive Learning for Long-Tailed Medical Image Classification (ws-MulSupCon) 
+# 【MICCAI'2025】 ws-MulSupCon for Long-Tailed Medical Image Classification
 
-Official implementation of ws-MulSupCon. 
+Official implementation of "Weighted Stratification in Multi-Label Contrastive Learning for Long-Tailed Medical Image Classification". 
