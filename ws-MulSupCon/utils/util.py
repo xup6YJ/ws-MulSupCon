@@ -106,9 +106,6 @@ def get_output_func(pattern='MulSupCon', with_weight=False):
 
     def generate_output_MulSupCon_iwash(batch_labels, ref_labels, scores, args):
 
-        dataset = args.dataset
-        wtype = args.output_func_w
-        single_h = args.single_health
 
         B = len(batch_labels) # batch size
         # spit single and multi desease case
@@ -163,14 +160,11 @@ def get_output_func(pattern='MulSupCon', with_weight=False):
         scores_s2m = scores[single_desease_indices[0]] # get score of the desease indices, shape: case x C
         scores_s2m = scores_s2m[:, ref_multi_indices[0]]
         
-        if not single_h:
-            scores_s2h = scores[single_desease_indices[0]] # get score of the desease indices, shape: case x C
-            scores_s2h = scores_s2h[:, ref_health_indices[0]]
-            scores_s2mh = torch.cat((scores_s2m, scores_s2h), dim=1)
-            ref_labels_multi = torch.cat((ref_labels[ref_multi], ref_labels[ref_health]), dim=0)
-        else:
-            scores_s2mh = scores_s2m
-            ref_labels_multi = ref_labels[ref_multi]
+        scores_s2h = scores[single_desease_indices[0]] # get score of the desease indices, shape: case x C
+        scores_s2h = scores_s2h[:, ref_health_indices[0]]
+        scores_s2mh = torch.cat((scores_s2m, scores_s2h), dim=1)
+        ref_labels_multi = torch.cat((ref_labels[ref_multi], ref_labels[ref_health]), dim=0)
+
 
         masks_s2m = (labels_single @ ref_labels_multi.T).to(torch.bool)
         s2m_IoU = torch.tensor(get_IoU(ref_labels_multi, labels_single)).cuda()
@@ -216,12 +210,10 @@ def get_output_func(pattern='MulSupCon', with_weight=False):
         scores_m2m = scores[indices_multi] # get score of the desease indices, shape: case x C
         scores_m2m = scores_m2m[:, ref_multi_indices[0]]
         
-        if not single_h:
-            scores_m2h = scores[indices_multi] # get score of the desease indices, shape: case x C
-            scores_m2h = scores_m2h[:, ref_health_indices[0]]
-            scores_m2mh = torch.cat((scores_m2m, scores_m2h), dim=1)
-        else:
-            scores_m2mh = scores_m2m
+        scores_m2h = scores[indices_multi] # get score of the desease indices, shape: case x C
+        scores_m2h = scores_m2h[:, ref_health_indices[0]]
+        scores_m2mh = torch.cat((scores_m2m, scores_m2h), dim=1)
+
 
         masks_m2m = (labels_multi @ ref_labels_multi.T).to(torch.bool)
         m2m_IoU = get_multi_IoU(ref_labels_multi, multi_case_label)
