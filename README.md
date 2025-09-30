@@ -13,6 +13,13 @@ python pretrain.py --dataset CXR14 --mode pretrain  --backbone resnet50 --batch_
     --output_func MulSupCon_iwash  --sm_lamdba 1.0  --weight_health 0.7
 ```
 
+## Pretrain weight on Google Cloud
+Pretrain weight for CXR14 and MIMIC dataset (ResNet50)
+```bash
+https://drive.google.com/file/d/1OC9KQmlGRh9NV-xrE7lEKWGruB1sOYPI/view?usp=sharing
+```
+
+
 ## Train & Evaluation
 ```bash
 python pretrain.py --dataset mimic --mode train  --backbone resnet50 --train_epochs 100   --train_batch_size 32 --train_scheduler RP --train_lr 0.0005 --train_pretrain \
@@ -24,6 +31,16 @@ python pretrain.py --dataset mimic --mode test  --backbone resnet50  \
 
 ```
 ## Citation
+```bash
+@inproceedings{lin2025weighted,
+  title={Weighted Stratification in Multi-label Contrastive Learning for Long-Tailed Medical Image Classification},
+  author={Lin, Ying-Chih and Chen, Yong-Sheng},
+  booktitle={International Conference on Medical Image Computing and Computer-Assisted Intervention},
+  pages={677--687},
+  year={2025},
+  organization={Springer}
+}
+```
 
 ## Acknowledgements
 Our code is adapted from ["MulSupCon"](https://github.com/williamzhangsjtu/MulSupCon). Great appreciation to these authors for their efforts in building the research community in multi-label contrastive learning.
